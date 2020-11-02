@@ -10,9 +10,6 @@
 	<script src="lib/d3.v4.min.js"></script>
 
 	<title>N-queens SAT</title>
-
-	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/grid/">
-
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 
 	<!-- Bootstrap core CSS -->
@@ -48,11 +45,11 @@
 												 target="_blank"
 	>n-queens problem</a>. Just in put the number of queens.</p>
 
-	<p class="mt-xl-5 mb-5">&nbsp;</p>
+	<p class="mb-5">&nbsp;</p>
 
 	<div class="row mb-3">
 		<div class="col-md-6">
-			<div >
+			<div>
 				<div class="form-group mb-2" style="display: inline-block">
 					<label>Number of Queens</label>
 				</div>
@@ -64,32 +61,41 @@
 		</div>
 
 	</div>
-	<div class="row mb-3">
-		<div id="editor" class="col-md-6 themed-grid-col bg-light">
-
+	<div class="row mb-3 wrapper container">
+		<div id="cnf-wrapper" class="col-md-6 themed-grid-col bg-light">
+			<div>
+				<h4><code>CNF Formula</code></h4>
+			</div>
+			<div id="editor-wrapper" style="overflow: scroll !important;">
+				<div id="editor"></div>
+			</div>
 		</div>
 		<div class="col-md-6 themed-grid-col bg-light">
-			<div class="row">
-				<div id="output" class="col-md-12 themed-grid-col bg-light" readOnly="true" spellcheck="false">
-					A child
-				</div>
-				<div class="col-md-12 themed-grid-col bg-light">
-					Another child
+			<div style="height: 500px; overflow: auto">
+				<div class="row">
+					<div id="output" class="col-md-12 themed-grid-col bg-light" readOnly="true" spellcheck="false">
+						A child
+					</div>
+					<div class="col-md-12 themed-grid-col bg-light">
+						Another child
+					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
 
-	<hr class="my-4">
+
+</div>
 
 </div>
 <script src="js/interface.js"></script>
 
 
 <!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
 
 <!-- FontAwesome -->
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
@@ -97,18 +103,20 @@
 <!-- Default Statcounter code for cyrptominisat_web
 http://msoos.github.io/cryptominisat_web/ -->
 <script type="text/javascript">
-	var sc_project=11721099;
-	var sc_invisible=1;
-	var sc_security="7e859659";
+	var sc_project = 11721099;
+	var sc_invisible = 1;
+	var sc_security = "7e859659";
 </script>
 <script type="text/javascript"
 		src="https://www.statcounter.com/counter/counter.js"
 		async></script>
-<noscript><div class="statcounter"><a title="Web Analytics"
-									  href="http://statcounter.com/" target="_blank"><img
-	class="statcounter"
-	src="//c.statcounter.com/11721099/0/7e859659/1/" alt="Web
-Analytics"></a></div></noscript>
+<noscript>
+	<div class="statcounter"><a title="Web Analytics"
+								href="http://statcounter.com/" target="_blank"><img
+		class="statcounter"
+		src="//c.statcounter.com/11721099/0/7e859659/1/" alt="Web
+Analytics"></a></div>
+</noscript>
 <!-- End of Statcounter Code -->
 
 <script>
@@ -124,7 +132,7 @@ Analytics"></a></div></noscript>
 	}
 
 	function base64enc(x) {
-		return btoa(x).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g,'')
+		return btoa(x).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
 	}
 
 	function copyToClipboard(x) {
@@ -154,9 +162,9 @@ Analytics"></a></div></noscript>
 			$('#save').removeAttr('disabled');
 		} else {
 			$.ajax({
-				url : "minisat/test.cnf",
+				url: "minisat/test.cnf",
 				dataType: "text",
-				success : function (data) {
+				success: function (data) {
 					$('#editor').val(SAT_expression(5));
 					$('#save').removeAttr('disabled');
 				}
@@ -173,7 +181,7 @@ Analytics"></a></div></noscript>
 			// Push a new history item and change the URL
 			window.location.hash = '';
 			history.pushState(
-				{ 'source': editor.getValue() },
+				{'source': editor.getValue()},
 				'', // title
 				window.location.href.replace(/#$/, '') + '#' + base64enc(editor.getValue())
 			)
@@ -184,7 +192,7 @@ Analytics"></a></div></noscript>
 			// Show and hide the popover as a visual indication
 			var x = this;
 			$(this).popover('show');
-			setTimeout(function() {
+			setTimeout(function () {
 				$(x).popover('hide');
 			}, 700);
 		})
@@ -199,7 +207,7 @@ Analytics"></a></div></noscript>
 
 	function at_bottom() {
 		var height = document.getElementById("output").offsetHeight;
-		return (document.getElementById("output").scrollTop+height) >= document.getElementById("output").scrollHeight;
+		return (document.getElementById("output").scrollTop + height) >= document.getElementById("output").scrollHeight;
 	}
 
 	Module['onRuntimeInitialized'] = function () {
@@ -208,21 +216,22 @@ Analytics"></a></div></noscript>
 			$('#result').text('Ready');
 		})
 	}
-	Module['print'] = function(text) {
+	Module['print'] = function (text) {
 		var bottom = at_bottom();
-		$('#output').append(text+"\n")
+		$('#output').append(text + "\n")
 		if (bottom) {
 			scroll();
 		}
 	};
-	Module['printErr'] = function(text) {
-		$('#output').append("--error-- " + text+"\n")
+	Module['printErr'] = function (text) {
+		$('#output').append("--error-- " + text + "\n")
 		scroll();
 	};
 
 
 	must_stop = false;
 	running = false;
+
 	function check_result(result) {
 
 		if (must_stop) {
@@ -246,7 +255,7 @@ Analytics"></a></div></noscript>
 			$('#result').text('UNSAT');
 			running = false;
 		} else if (result == 2) {
-			window.setTimeout(function(){
+			window.setTimeout(function () {
 				var result = cont_query();
 				check_result(result);
 			}, 50);
@@ -257,6 +266,7 @@ Analytics"></a></div></noscript>
 			$('#playbut').addClass("fa-play");
 		}
 	}
+
 	$().ready(function () {
 		$('#runbutton').click(function () {
 			if (running) {
@@ -279,7 +289,7 @@ Analytics"></a></div></noscript>
 				console.log(result);
 				console.log(err);
 				running = false;
-				must_stop =false;
+				must_stop = false;
 				$('#result').text('Error');
 			}
 		})
@@ -307,7 +317,6 @@ Analytics"></a></div></noscript>
 		return ret;
 	}
 </script>
-
 
 
 </body>

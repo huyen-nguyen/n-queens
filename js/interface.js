@@ -18,6 +18,10 @@ inputDiv
 
     });
 
+d3.select("#cnf-wrapper").style("height")
+d3.select("#editor-wrapper")
+    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70) + "px")
+
 function submit() {
     console.log("hi")
     $("#editor").html(() => {

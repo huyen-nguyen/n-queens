@@ -35,6 +35,15 @@
   -webkit-box-shadow: none;
 }
 
-code{
-  color: black;
+.wrapper {
+  /*background-color: #f1f1f1;*/
+  overflow: auto;
+  position: absolute;
+  top: 270px;
+  bottom: 0;
+  height: auto;
+}
+
+code {
+  color: #991d92;
 }
