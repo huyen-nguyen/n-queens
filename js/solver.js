@@ -22,7 +22,6 @@ function atleast_one(list) {
 // cnf formula for atmost one of the variables in the chosen list to be true
 function atmost_one(list) {
     let temp=""
-    console.log(list)
     list.forEach(function (x) {
         list.slice(list.indexOf(x) + 1).forEach(y => {
             temp = temp +" -"+x+" -"+y+" 0\n"
