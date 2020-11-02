@@ -1,6 +1,6 @@
 // helper functions
 
-// cnf formula for exactly one of the variables in list A to be true
+// cnf formula exactly one of the variables in the chosen list to be true
 
 function exactly_one(list) {
     let temp = ""
@@ -9,7 +9,7 @@ function exactly_one(list) {
     return temp
 }
 
-// cnf formula for atleast one of the variables in list A to be true
+// cnf formula for atleast one of the variables in the chosen list to be true
 function atleast_one(list) {
     let temp=""
     list.forEach(item => {
@@ -19,7 +19,7 @@ function atleast_one(list) {
     return temp
 }
 
-// cnf formula for atmost one of the variables in list A to be true
+// cnf formula for atmost one of the variables in the chosen list to be true
 function atmost_one(list) {
     let temp=""
     console.log(list)
@@ -38,6 +38,7 @@ function varmap(r,c,N) {
     return r*N+c+1
 }
 
+// range
 function range(start, stop, step) {
     if (typeof stop == 'undefined') {
         // one param defined
@@ -57,73 +58,78 @@ function range(start, stop, step) {
     return result;
 }
 
-N = 5
-
-// Start Solver
-console.log("c SAT Expression for N="+N)
-let spots = N*N
-console.log("c Board has "+spots+" positions")
+/**
+ * @return {string}
+ */
+function SAT_expression(N){
+// Start Solver: Comments
+    console.log("c SAT Expression for number of queens N="+N)
+    let size = N*N
+    console.log("c Board has "+size+" positions")
 
 // Exactly 1 queen per row
-let tempG=""
-range(0,N).forEach(row => {
-    let A=[]
-    range(0,N).forEach(column => {
-        let position = varmap(row,column,N)
-        A.push(position)
+    let tempG=""
+    range(0,N).forEach(row => {
+        let A=[]
+        range(0,N).forEach(column => {
+            let position = varmap(row,column,N)
+            A.push(position)
+        })
+        tempG = tempG+exactly_one(A)
     })
-    tempG = tempG+exactly_one(A)
-})
 
 
 // Exactly 1 queen per column
-range(0,N).forEach(column => {
-    let A=[]
-    range(0,N).forEach(row => {
-        let position = varmap(row,column,N)
-        A.push(position)
+    range(0,N).forEach(column => {
+        let A=[]
+        range(0,N).forEach(row => {
+            let position = varmap(row,column,N)
+            A.push(position)
+        })
+        tempG = tempG+exactly_one(A)
     })
-    tempG = tempG+exactly_one(A)
-})
 
-    
-    
+
 // Atmost 1 queen per negative diagonal from left
-range(N-1,-1,-1).forEach(row => {
-    let A=[]
-    range(0,N-row).forEach(x => {
-        A.push(varmap(row+x,x,N))
+    range(N-1,-1,-1).forEach(row => {
+        let A=[]
+        range(0,N-row).forEach(x => {
+            A.push(varmap(row+x,x,N))
+        })
+        tempG=tempG+atmost_one(A)
     })
-    tempG=tempG+atmost_one(A)
-})
 
 
 // Atmost 1 queen per negative diagonal from top
-range(1,N).forEach(column => {
-    A=[]
-    range(0,N-column).forEach(x => {
-        A.push(varmap(x,column+x,N))
+    range(1,N).forEach(column => {
+        A=[]
+        range(0,N-column).forEach(x => {
+            A.push(varmap(x,column+x,N))
+        })
+        tempG=tempG+atmost_one(A)
     })
-    tempG=tempG+atmost_one(A)
-})
-
 
 // Atmost 1 queen per positive diagonal from right
-range(N-1,-1,-1).forEach(row => {
-    let A=[]
-    range(0,N-row).forEach(x => {
-        A.push(varmap(row+x,N-1-x,N))
+    range(N-1,-1,-1).forEach(row => {
+        let A=[]
+        range(0,N-row).forEach(x => {
+            A.push(varmap(row+x,N-1-x,N))
+        })
+        tempG=tempG+atmost_one(A)
     })
-    tempG=tempG+atmost_one(A)
-})
 
 // Atmost 1 queen per positive diagonal from top
-range(N-2,-1,-1).forEach(column => {
-    A=[]
-    range(0,column+1).forEach(x => {
-        A.push(varmap(x,column-x,N))
+    range(N-2,-1,-1).forEach(column => {
+        A=[]
+        range(0,column+1).forEach(x => {
+            A.push(varmap(x,column-x,N))
+        })
+        tempG=tempG+atmost_one(A)
     })
-    tempG=tempG+atmost_one(A)
-})
 
-console.log('p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG)
+    let output = 'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG
+    console.log(output);
+    return output
+}
+
+SAT_expression(7)
