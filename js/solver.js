@@ -62,12 +62,12 @@ function range(start, stop, step) {
  */
 function SAT_expression(N){
 // Start Solver: Comments
-    console.log("c SAT Expression for number of queens N="+N)
+    let output="c SAT Expression for number of queens N="+N+"\n"
     let size = N*N
-    console.log("c Board has "+size+" positions")
+    output = output + "c Board has "+size+" positions" + "\n"
 
 // Exactly 1 queen per row
-    let tempG=""
+    let tempG = ""
     range(0,N).forEach(row => {
         let A=[]
         range(0,N).forEach(column => {
@@ -126,9 +126,6 @@ function SAT_expression(N){
         tempG=tempG+atmost_one(A)
     })
 
-    let output = 'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG
-    console.log(output);
+    output = output +  'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG
     return output
 }
-
-SAT_expression(7)

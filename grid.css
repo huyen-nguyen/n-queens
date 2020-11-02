@@ -34,3 +34,7 @@
   box-shadow: none;
   -webkit-box-shadow: none;
 }
+
+code{
+  color: black;
+}

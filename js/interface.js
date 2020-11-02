@@ -18,18 +18,20 @@ inputDiv
 
     });
 
+function submit() {
+    console.log("hi")
+    $("#editor").html(() => {
+        // return SAT_expression(parseInt(document.getElementById("inputNumber").value))
+       return format(SAT_expression(parseInt(document.getElementById("inputNumber").value)))
+    })
+}
 
-// Get the input field
-var input = document.getElementById("inputNumber");
-
-// // Execute a function when the user releases a key on the keyboard
-// input.addEventListener("keyup", function(event) {
-//     // Number 13 is the "Enter" key on the keyboard
-//     if (event.key === 'Enter') {
-//         console.log(inputDiv)
-//         // Cancel the default action, if needed
-//         event.preventDefault();
-//         // Trigger the button element with a click
-//         document.getElementById("myBtn").click();
-//     }
-// });
+function format(result) {
+    return "<code><span style='color: #636b73'>" + result
+        .replace("positions", "positions</span>")
+            .replace("p ", "<span style='color: #8f4214'>p ")
+            .replace("1 ", "</span><span style='color: #130095'>1 ")
+        .split("\n")
+        .join("<br/>")
+    + "</span></code>"
+}

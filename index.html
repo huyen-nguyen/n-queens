@@ -13,6 +13,8 @@
 
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/grid/">
 
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css"
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -56,18 +58,19 @@
 				</div>
 				<div id="selectPanelDiv" class="form-group mx-sm-3 mb-2" style="display: inline-block">
 				</div>
-				<button id="myBtn" class="btn btn-success mb-2">Run</button>
+				<button id="runbutton" onclick="submit()" class="btn btn-success mb-2">Run</button>
+				<div id="result" class="btn">Loading</div>
 			</div>
 		</div>
 
 	</div>
 	<div class="row mb-3">
-		<div class="col-md-6 themed-grid-col bg-light">
+		<div id="editor" class="col-md-6 themed-grid-col bg-light">
 
 		</div>
 		<div class="col-md-6 themed-grid-col bg-light">
 			<div class="row">
-				<div class="col-md-12 themed-grid-col bg-light">
+				<div id="output" class="col-md-12 themed-grid-col bg-light" readOnly="true" spellcheck="false">
 					A child
 				</div>
 				<div class="col-md-12 themed-grid-col bg-light">
@@ -77,12 +80,235 @@
 		</div>
 	</div>
 
-
 	<hr class="my-4">
-
 
 </div>
 <script src="js/interface.js"></script>
+
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- FontAwesome -->
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+<!-- Default Statcounter code for cyrptominisat_web
+http://msoos.github.io/cryptominisat_web/ -->
+<script type="text/javascript">
+	var sc_project=11721099;
+	var sc_invisible=1;
+	var sc_security="7e859659";
+</script>
+<script type="text/javascript"
+		src="https://www.statcounter.com/counter/counter.js"
+		async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+									  href="http://statcounter.com/" target="_blank"><img
+	class="statcounter"
+	src="//c.statcounter.com/11721099/0/7e859659/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+<script>
+	function base64dec(x) {
+		try {
+			if (x.length % 4 != 0) {
+				x = x.padEnd(x.length + (4 - (x.length % 4)), '=')
+			}
+			return atob(x.replace(/-/g, '+').replace(/_/g, '/'))
+		} catch (err) {
+			return ''
+		}
+	}
+
+	function base64enc(x) {
+		return btoa(x).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g,'')
+	}
+
+	function copyToClipboard(x) {
+		// Create an invisible text area
+		var target = $('<textarea>')
+			.css('position', 'absolute')
+			.css('left', '-9999px')
+			.css('top', '0px')
+			.val(x)
+		$('body').append(target);
+
+		// Copy the contents
+		target.focus()
+		target[0].setSelectionRange(0, x.length)
+		document.execCommand('copy')
+
+		// Remove it from the page
+		target.remove()
+	}
+
+	$().ready(function () {
+
+		// Load text from the URL hash if it's there
+		if (window.location.hash) {
+			var hash = window.location.hash.substring(1);
+			$('#editor').val(base64dec(hash));
+			$('#save').removeAttr('disabled');
+		} else {
+			$.ajax({
+				url : "minisat/test.cnf",
+				dataType: "text",
+				success : function (data) {
+					$('#editor').val(SAT_expression(5));
+					$('#save').removeAttr('disabled');
+				}
+			});
+		}
+
+		// Clear the hash whenever the code is updated
+		$("#result").on('click', function () {
+			window.location.hash = '';
+		})
+
+		// Save button implementation
+		$('#save').click(function () {
+			// Push a new history item and change the URL
+			window.location.hash = '';
+			history.pushState(
+				{ 'source': editor.getValue() },
+				'', // title
+				window.location.href.replace(/#$/, '') + '#' + base64enc(editor.getValue())
+			)
+
+			// Copy the URL to the clipboard
+			copyToClipboard(window.location.href);
+
+			// Show and hide the popover as a visual indication
+			var x = this;
+			$(this).popover('show');
+			setTimeout(function() {
+				$(x).popover('hide');
+			}, 700);
+		})
+	})
+</script>
+
+<script src="minisat/cryptominisat5_simple.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	function scroll() {
+		document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
+	}
+
+	function at_bottom() {
+		var height = document.getElementById("output").offsetHeight;
+		return (document.getElementById("output").scrollTop+height) >= document.getElementById("output").scrollHeight;
+	}
+
+	Module['onRuntimeInitialized'] = function () {
+		$().ready(function () {
+			$('#runbutton').removeAttr("disabled")
+			$('#result').text('Ready');
+		})
+	}
+	Module['print'] = function(text) {
+		var bottom = at_bottom();
+		$('#output').append(text+"\n")
+		if (bottom) {
+			scroll();
+		}
+	};
+	Module['printErr'] = function(text) {
+		$('#output').append("--error-- " + text+"\n")
+		scroll();
+	};
+
+
+	must_stop = false;
+	running = false;
+	function check_result(result) {
+
+		if (must_stop) {
+			$('#output').append("Stopped.\n")
+			$('#result').text('Ready');
+			$('#playbut').removeClass("fa-stop");
+			$('#playbut').addClass("fa-play");
+
+			scroll();
+			must_stop = false;
+			running = false;
+			return;
+		}
+
+		var nconfl = num_conflicts();
+		$('#result').text(nconfl + " confl");
+		if (result == 0) {
+			$('#result').text('SAT');
+			running = false;
+		} else if (result == 1) {
+			$('#result').text('UNSAT');
+			running = false;
+		} else if (result == 2) {
+			window.setTimeout(function(){
+				var result = cont_query();
+				check_result(result);
+			}, 50);
+		}
+
+		if (!running) {
+			$('#playbut').removeClass("fa-stop");
+			$('#playbut').addClass("fa-play");
+		}
+	}
+	$().ready(function () {
+		$('#runbutton').click(function () {
+			if (running) {
+				must_stop = true;
+				$('#output').append("Stopping...\n")
+				scroll();
+				return;
+			}
+			running = true;
+			$('#playbut').removeClass("fa-play");
+			$('#playbut').addClass("fa-stop");
+
+			$('#result').text('Running');
+
+			var source = SAT_expression(parseInt(document.getElementById("inputNumber").value));
+			try {
+				var result = cms_query(source)
+				check_result(result);
+			} catch (err) {
+				console.log(result);
+				console.log(err);
+				running = false;
+				must_stop =false;
+				$('#result').text('Error');
+			}
+		})
+	})
+</script>
+
+<script>
+	function cms_query(source) {
+		$('#output').html("");
+		scroll();
+		var solve_function = Module.cwrap('cstart_solve', 'number', ['string']);
+		ret = solve_function(source);
+		return ret;
+	}
+
+	function cont_query() {
+		var cont_function = Module.cwrap('ccontinue_solve', 'number');
+		ret = cont_function();
+		return ret;
+	}
+
+	function num_conflicts() {
+		var num_conflicts_function = Module.cwrap('cget_num_conflicts', 'number');
+		ret = num_conflicts_function();
+		return ret;
+	}
+</script>
+
+
 
 </body>
 </html>
