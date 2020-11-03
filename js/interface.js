@@ -22,15 +22,17 @@ d3.select("#cnf-wrapper").style("height")
 d3.select("#editor-wrapper")
     .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70) + "px")
 
+
 function submit() {
     console.log("hi")
+
     $("#editor").html(() => {
-        // return SAT_expression(parseInt(document.getElementById("inputNumber").value))
-       return format(SAT_expression(parseInt(document.getElementById("inputNumber").value)))
+        let val = parseInt(document.getElementById("inputNumber").value)
+       return isValid(val) ? formatCNF(SAT_expression(val)) : "<code style='color: #a00000'>invalid input!</code>"
     })
 }
 
-function format(result) {
+function formatCNF(result) {
     return "<code><span style='color: #636b73'>" + result
         .replace("positions", "positions</span>")
             .replace("p ", "<span style='color: #8f4214'>p ")
@@ -38,4 +40,38 @@ function format(result) {
         .split("\n")
         .join("<br/>")
     + "</span></code>"
+}
+
+function cut(string) {
+    if (string.length > 60){
+        let first = string.slice(0,2)
+
+    }
+    return string
+}
+
+function isValid(val) {
+    return !(isNaN(val) || parseInt(val) < 0);
+}
+
+function colorNormal(x, color) {
+    var chessBoard = document.getElementById("chessBoardNormal");
+    for (var i = 0; i < x; i++) {
+        var row = chessBoard.appendChild(document.createElement("div"));
+        for (var j = 0; j < x; j++) {
+            var span = document.createElement('span');
+            if(i & 1){ // odd
+                if(j & 1){ // white
+
+                } else { // black
+                    span.style.backgroundColor = "#dbeef4";
+                }
+            } else {  // even
+                if(j & 1){ // black
+                    span.style.backgroundColor = "#dbeef4";
+                }
+            }
+            row.appendChild(span);
+        }
+    }
 }
