@@ -27,7 +27,7 @@
 	<h1>N-queens Problem SAT Solver</h1>
 	<p class="lead">Simple SAT solver for the <a href="https://developers.google.com/optimization/cp/queens"
 												 target="_blank"
-	>n-queens problem</a>. Just in put the number of queens.</p>
+	>n-queens problem</a>. Just input the number of queens.</p>
 
 		<p class="mb-4">&nbsp;</p>
 
@@ -63,7 +63,7 @@
 				<h4><code>Output</code></h4>
 			</div>
 			<div id="output-wrapper" style="overflow: auto">
-				<div class="row">
+				<div class="row" style="width: 1100px">
 					<div id="output" class="col-md-12 bg-light" readOnly="true" spellcheck="false">
 					</div>
 
@@ -144,11 +144,11 @@
 		$('#result').text(nconfl + " confl");
 		if (result == 0) {
 			$('#result').html('<b>SATISFIABLE</b>');
-			colorNormal(parseInt(document.getElementById("inputNumber").value), true)
+			colorNormal(parseInt(document.getElementById("inputNumber").value))
 			running = false;
 		} else if (result == 1) {
 			$('#result').html('<b>UNSATISFIABLE</b>');
-			colorNormal(parseInt(document.getElementById("inputNumber").value), false)
+			colorNormal(parseInt(document.getElementById("inputNumber").value))
 			running = false;
 		} else if (result == 2) {
 			window.setTimeout(function () {

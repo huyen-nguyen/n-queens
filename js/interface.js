@@ -52,11 +52,12 @@ function isValid(val) {
     return !(isNaN(val) || parseInt(val) < 0);
 }
 
-function colorNormal(x, sat) {
+function colorNormal(x) {
     d3.select("#chessBoardNormal").selectAll("*").remove()
     d3.select("#chessBoardNormal")
         .style("visibility", x !== 0 ? "visible" : "hidden")
     var chessBoard = document.getElementById("chessBoardNormal");
+    d3.select("#chessBoardNormal").style("width", (32*x+4) + "px")
     let locationArr = outputString.split("|v").slice(1).join("").split(" ").map(d => parseInt(d)).filter(d => d>0)
 
     for (var i = 0; i < x; i++) {
