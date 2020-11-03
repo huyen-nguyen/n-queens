@@ -14,9 +14,7 @@ inputDiv
     .attr("value", 4)
     .attr("step", "1")
     .attr("pattern", "\d+")
-    .on("change", function () {
 
-    });
 let chessboardHeight = 246
 d3.select("#cnf-wrapper").style("height")
 d3.select("#editor-wrapper")
@@ -40,13 +38,6 @@ function formatCNF(result) {
         + "</span></code>"
 }
 
-function cut(string) {
-    if (string.length > 60) {
-        let first = string.slice(0, 2)
-
-    }
-    return string
-}
 
 function isValid(val) {
     return !(isNaN(val) || parseInt(val) < 0);

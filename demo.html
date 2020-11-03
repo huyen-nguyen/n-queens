@@ -109,7 +109,7 @@ Analytics"></a></div></noscript>
 				url : "minisat/test.cnf",
 				dataType: "text",
 				success : function (data) {
-					$('#editor').val(SAT_expression(5));
+					$('#editor').val(sat(5));
 					$('#save').removeAttr('disabled');
 				}
 			});

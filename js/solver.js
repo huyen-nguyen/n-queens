@@ -2,15 +2,15 @@
 
 // cnf formula exactly one of the variables in the chosen list to be true
 
-function exactly_one(list) {
+function ext_one(list) {
     let temp = ""
-    temp=temp+atleast_one(list)
-    temp=temp+atmost_one(list)
+    temp=temp+atl_one(list)
+    temp=temp+atm_one(list)
     return temp
 }
 
 // cnf formula for atleast one of the variables in the chosen list to be true
-function atleast_one(list) {
+function atl_one(list) {
     let temp=""
     list.forEach(item => {
         temp = temp +" " + item
@@ -20,7 +20,7 @@ function atleast_one(list) {
 }
 
 // cnf formula for atmost one of the variables in the chosen list to be true
-function atmost_one(list) {
+function atm_one(list) {
     let temp=""
     list.forEach(function (x) {
         list.slice(list.indexOf(x) + 1).forEach(y => {
@@ -60,7 +60,7 @@ function range(start, stop, step) {
 /**
  * @return {string}
  */
-function SAT_expression(N){
+function sat(N){
 // Start Solver: Comments
     let output="c SAT Expression for N="+N+((N === 1)? " queen\n": " queens\n")
     let size = N*N
@@ -74,7 +74,7 @@ function SAT_expression(N){
             let position = varmap(row,column,N)
             A.push(position)
         })
-        tempG = tempG+exactly_one(A)
+        tempG = tempG+ext_one(A)
     })
 
 
@@ -85,7 +85,7 @@ function SAT_expression(N){
             let position = varmap(row,column,N)
             A.push(position)
         })
-        tempG = tempG+exactly_one(A)
+        tempG = tempG+ext_one(A)
     })
 
 
@@ -95,7 +95,7 @@ function SAT_expression(N){
         range(0,N-row).forEach(x => {
             A.push(varmap(row+x,x,N))
         })
-        tempG=tempG+atmost_one(A)
+        tempG=tempG+atm_one(A)
     })
 
 
@@ -105,7 +105,7 @@ function SAT_expression(N){
         range(0,N-column).forEach(x => {
             A.push(varmap(x,column+x,N))
         })
-        tempG=tempG+atmost_one(A)
+        tempG=tempG+atm_one(A)
     })
 
 // Atmost 1 queen per positive diagonal from right
@@ -114,7 +114,7 @@ function SAT_expression(N){
         range(0,N-row).forEach(x => {
             A.push(varmap(row+x,N-1-x,N))
         })
-        tempG=tempG+atmost_one(A)
+        tempG=tempG+atm_one(A)
     })
 
 // Atmost 1 queen per positive diagonal from top
@@ -123,7 +123,7 @@ function SAT_expression(N){
         range(0,column+1).forEach(x => {
             A.push(varmap(x,column-x,N))
         })
-        tempG=tempG+atmost_one(A)
+        tempG=tempG+atm_one(A)
     })
 
     output = output +  'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG

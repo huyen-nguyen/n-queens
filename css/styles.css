@@ -19,7 +19,6 @@
 }
 
 .wrapper {
-    /*background-color: #f1f1f1;*/
     overflow: auto;
     position: absolute;
     top: 235px;
@@ -44,6 +43,12 @@ code {
 
 h4 code {
     color: #991d92;
+}
+
+#scroll-note{
+    color: #909498;
+    float: right;
+    line-height: 1.8;
 }
 
 /* chess board */

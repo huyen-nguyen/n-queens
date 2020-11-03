@@ -1392,7 +1392,7 @@ function integrateWasmJS() {
   var method = 'native-wasm';
 
   var wasmTextFile = 'cryptominisat5_simple.wast';
-  var wasmBinaryFile = 'cryptominisat5_simple.wasm';
+  var wasmBinaryFile = 'crmns.wasm';
   var asmjsCodeFile = 'cryptominisat5_simple.temp.asm.js';
 
   if (typeof Module['locateFile'] === 'function') {
