@@ -16,24 +16,8 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css"
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-	<style>
-		.bd-placeholder-img {
-			font-size: 1.125rem;
-			text-anchor: middle;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-		}
-
-		@media (min-width: 768px) {
-			.bd-placeholder-img-lg {
-				font-size: 3.5rem;
-			}
-		}
-	</style>
 	<!-- Custom styles for this template -->
-	<link href="grid.css" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
 </head>
 <body class="py-4">
 <script src="js/solver.js"></script>
@@ -45,7 +29,7 @@
 												 target="_blank"
 	>n-queens problem</a>. Just in put the number of queens.</p>
 
-	<!--	<p class="mb-5">&nbsp;</p>-->
+		<p class="mb-4">&nbsp;</p>
 
 	<div class="row mb-3">
 		<div class="col-md-8">
@@ -86,23 +70,17 @@
 				</div>
 			</div>
 
-			<div id="chess-wrapper" class="col-md-12 bg-light" style="height:255px; overflow: auto">
+			<div id="chess-wrapper" class="col-md-12 bg-light" style="overflow: auto">
 				<div>
 					<div id="chessBoardNormal" class="chessBoard mt-3" style="visibility: hidden">
-
 					</div>
-
 				</div>
 			</div>
-
 		</div>
-
-
 	</div>
 
 </div>
 <script src="js/interface.js"></script>
-
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -111,105 +89,6 @@
 
 <!-- FontAwesome -->
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-
-<!-- Default Statcounter code for cyrptominisat_web
-http://msoos.github.io/cryptominisat_web/ -->
-<script type="text/javascript">
-	var sc_project = 11721099;
-	var sc_invisible = 1;
-	var sc_security = "7e859659";
-</script>
-<script type="text/javascript"
-		src="https://www.statcounter.com/counter/counter.js"
-		async></script>
-<noscript>
-	<div class="statcounter"><a title="Web Analytics"
-								href="http://statcounter.com/" target="_blank"><img
-		class="statcounter"
-		src="//c.statcounter.com/11721099/0/7e859659/1/" alt="Web
-Analytics"></a></div>
-</noscript>
-<!-- End of Statcounter Code -->
-
-<script>
-	function base64dec(x) {
-		try {
-			if (x.length % 4 != 0) {
-				x = x.padEnd(x.length + (4 - (x.length % 4)), '=')
-			}
-			return atob(x.replace(/-/g, '+').replace(/_/g, '/'))
-		} catch (err) {
-			return ''
-		}
-	}
-
-	function base64enc(x) {
-		return btoa(x).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
-	}
-
-	function copyToClipboard(x) {
-		// Create an invisible text area
-		var target = $('<textarea>')
-			.css('position', 'absolute')
-			.css('left', '-9999px')
-			.css('top', '0px')
-			.val(x)
-		$('body').append(target);
-
-		// Copy the contents
-		target.focus()
-		target[0].setSelectionRange(0, x.length)
-		document.execCommand('copy')
-
-		// Remove it from the page
-		target.remove()
-	}
-
-	// $().ready(function () {
-	//
-	// 	// Load text from the URL hash if it's there
-	// 	if (window.location.hash) {
-	// 		var hash = window.location.hash.substring(1);
-	// 		$('#editor').val(base64dec(hash));
-	// 		$('#save').removeAttr('disabled');
-	// 	} else {
-	// 		$.ajax({
-	// 			url: "minisat/test.cnf",
-	// 			dataType: "text",
-	// 			success: function (data) {
-	// 				$('#editor').val(SAT_expression(5));
-	// 				$('#save').removeAttr('disabled');
-	// 			}
-	// 		});
-	// 	}
-	//
-	// 	// Clear the hash whenever the code is updated
-	// 	$("#result").on('click', function () {
-	// 		window.location.hash = '';
-	// 	})
-	//
-	// 	// Save button implementation
-	// 	$('#save').click(function () {
-	// 		// Push a new history item and change the URL
-	// 		window.location.hash = '';
-	// 		history.pushState(
-	// 			{'source': editor.getValue()},
-	// 			'', // title
-	// 			window.location.href.replace(/#$/, '') + '#' + base64enc(editor.getValue())
-	// 		)
-	//
-	// 		// Copy the URL to the clipboard
-	// 		copyToClipboard(window.location.href);
-	//
-	// 		// Show and hide the popover as a visual indication
-	// 		var x = this;
-	// 		$(this).popover('show');
-	// 		setTimeout(function () {
-	// 			$(x).popover('hide');
-	// 		}, 700);
-	// 	})
-	// })
-</script>
 
 <script src="minisat/cryptominisat5_simple.js" type="text/javascript" charset="utf-8"></script>
 <script>
@@ -264,11 +143,11 @@ Analytics"></a></div>
 		var nconfl = num_conflicts();
 		$('#result').text(nconfl + " confl");
 		if (result == 0) {
-			$('#result').text('SATISFIABLE');
+			$('#result').html('<b>SATISFIABLE</b>');
 			colorNormal(parseInt(document.getElementById("inputNumber").value), true)
 			running = false;
 		} else if (result == 1) {
-			$('#result').text('UNSATISFIABLE');
+			$('#result').html('<b>UNSATISFIABLE</b>');
 			colorNormal(parseInt(document.getElementById("inputNumber").value), false)
 			running = false;
 		} else if (result == 2) {
@@ -296,8 +175,9 @@ Analytics"></a></div>
 			}
 			let val = parseInt(document.getElementById("inputNumber").value)
 			if (!isValid(val)) {
-				$("#editor").html("<code style='color: #a00000'>invalid input!</code>")
+				$('#editor').html("<code style='color: #a00000'>invalid input!</code>")
 				$('#output').html("")
+				$('#chessBoardNormal').html("")
 				return
 			}
 			$("#editor").html(formatCNF(SAT_expression(val)))

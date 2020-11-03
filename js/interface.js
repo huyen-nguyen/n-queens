@@ -17,22 +17,16 @@ inputDiv
     .on("change", function () {
 
     });
-
+let chessboardHeight = 246
 d3.select("#cnf-wrapper").style("height")
 d3.select("#editor-wrapper")
     .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70) + "px")
 
+d3.select("#chess-wrapper")
+    .style("height", (chessboardHeight) + "px")
+
 d3.select("#output-wrapper")
-    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70 - 255) + "px")
-
-function submit() {
-    console.log("hi")
-
-    $("#editor").html(() => {
-        let val = parseInt(document.getElementById("inputNumber").value)
-        return isValid(val) ? formatCNF(SAT_expression(val)) : "<code style='color: #a00000'>invalid input!</code>"
-    })
-}
+    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70 - chessboardHeight) + "px")
 
 function formatCNF(result) {
     return "<code><span style='color: #636b73'>" + result
