@@ -62,9 +62,9 @@ function range(start, stop, step) {
  */
 function SAT_expression(N){
 // Start Solver: Comments
-    let output="c SAT Expression for N="+N+" queens\n"
+    let output="c SAT Expression for N="+N+((N === 1)? " queen\n": " queens\n")
     let size = N*N
-    output = output + "c Board has "+size+" positions" + "\n"
+    output = output + "c Board has "+size+((N === 1)? " position\n": " positions\n")
 
 // Exactly 1 queen per row
     let tempG = ""

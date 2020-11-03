@@ -11,7 +11,7 @@ inputDiv
     .attr("class", "form-control")
     .attr("id", "inputNumber")
     .attr("type", "number")
-    .attr("value", 5)
+    .attr("value", 3)
     .attr("step", "1")
     .attr("pattern", "\d+")
     .on("change", function () {
@@ -28,23 +28,25 @@ function submit() {
 
     $("#editor").html(() => {
         let val = parseInt(document.getElementById("inputNumber").value)
-       return isValid(val) ? formatCNF(SAT_expression(val)) : "<code style='color: #a00000'>invalid input!</code>"
+        return isValid(val) ? formatCNF(SAT_expression(val)) : "<code style='color: #a00000'>invalid input!</code>"
     })
 }
 
 function formatCNF(result) {
     return "<code><span style='color: #636b73'>" + result
-        .replace("positions", "positions</span>")
+            .replace("positions", "positions</span>")
             .replace("p ", "<span style='color: #8f4214'>p ")
-            .replace("1 ", "</span><span style='color: #130095'>1 ")
-        .split("\n")
-        .join("<br/>")
-    + "</span></code>"
+            // .replace("1 position", )
+            .replace("1 2 ", "</span><span style='color: #130095'>1 2 ")
+            .replace("p cnf 1 2","p cnf 1 2</span><span style='color: #130095'>")
+            .split("\n")
+            .join("<br/>")
+        + "</span></code>"
 }
 
 function cut(string) {
-    if (string.length > 60){
-        let first = string.slice(0,2)
+    if (string.length > 60) {
+        let first = string.slice(0, 2)
 
     }
     return string
@@ -54,24 +56,28 @@ function isValid(val) {
     return !(isNaN(val) || parseInt(val) < 0);
 }
 
-function colorNormal(x, color) {
-    var chessBoard = document.getElementById("chessBoardNormal");
+function colorNormal(x) {
+    var chessBoard = document.getElementById("chessboard");
     for (var i = 0; i < x; i++) {
         var row = chessBoard.appendChild(document.createElement("div"));
         for (var j = 0; j < x; j++) {
             var span = document.createElement('span');
-            if(i & 1){ // odd
-                if(j & 1){ // white
+            if (i & 1) { // odd
+                if (j & 1) { // white
 
                 } else { // black
                     span.style.backgroundColor = "#dbeef4";
                 }
             } else {  // even
-                if(j & 1){ // black
+                if (j & 1) { // black
                     span.style.backgroundColor = "#dbeef4";
                 }
             }
             row.appendChild(span);
         }
     }
+}
+
+function draw() {
+    colorNormal(val)
 }

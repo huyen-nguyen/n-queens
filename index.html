@@ -241,7 +241,7 @@ Analytics"></a></div>
 	function check_result(result) {
 
 		if (must_stop) {
-			$('#output').append("Stopped.\n")
+			$('#output').append("<code>Stopped.<code><br/>")
 			$('#result').text('Ready');
 			$('#playbut').removeClass("fa-stop");
 			$('#playbut').addClass("fa-play");
@@ -282,7 +282,7 @@ Analytics"></a></div>
 				scroll();
 				return;
 			}
-			let val = document.getElementById("inputNumber").value
+			let val = parseInt(document.getElementById("inputNumber").value)
 			if (!isValid(val)){
 				$("#editor").html("<code style='color: #a00000'>invalid input!</code>")
 				$('#output').html("")
@@ -295,8 +295,8 @@ Analytics"></a></div>
 
 			$('#result').text('Running');
 
-			var source = SAT_expression(parseInt(document.getElementById("inputNumber").value));
-			// colorNormal()
+			var source = SAT_expression(val);
+			colorNormal(val)
 			try {
 				var result = cms_query(source)
 				check_result(result);
