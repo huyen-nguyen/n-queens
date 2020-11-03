@@ -78,17 +78,23 @@
 				<div class="row">
 					<div id="output" class="col-md-12 bg-light" readOnly="true" spellcheck="false">
 					</div>
-					<div id="chessboard" class="col-md-12 bg-light">
-						Another child
-					</div>
+
 				</div>
 			</div>
+
+			<div id="chess-wrapper" class="col-md-12 bg-light" style="overflow: auto">
+				<div>
+					<div id="chessBoardNormal" class="chessBoard mt-3" style="visibility: hidden">
+
+					</div>
+
+				</div>
+			</div>
+
 		</div>
 
+
 	</div>
-
-
-</div>
 
 </div>
 <script src="js/interface.js"></script>
@@ -283,13 +289,13 @@ Analytics"></a></div>
 				return;
 			}
 			let val = parseInt(document.getElementById("inputNumber").value)
-			if (!isValid(val)){
+			if (!isValid(val)) {
 				$("#editor").html("<code style='color: #a00000'>invalid input!</code>")
 				$('#output').html("")
 				return
 			}
 			$("#editor").html(formatCNF(SAT_expression(val)))
-				running = true;
+			running = true;
 			$('#playbut').removeClass("fa-play");
 			$('#playbut').addClass("fa-stop");
 

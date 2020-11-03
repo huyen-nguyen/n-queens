@@ -22,6 +22,8 @@ d3.select("#cnf-wrapper").style("height")
 d3.select("#editor-wrapper")
     .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70) + "px")
 
+d3.select("#chess-wrapper")
+    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70 - 400) + "px")
 
 function submit() {
     console.log("hi")
@@ -57,20 +59,26 @@ function isValid(val) {
 }
 
 function colorNormal(x) {
-    var chessBoard = document.getElementById("chessboard");
+    d3.select("#chessBoardNormal").selectAll("*").remove()
+    d3.select("#chessBoardNormal")
+        .style("visibility", "visible")
+    var chessBoard = document.getElementById("chessBoardNormal");
     for (var i = 0; i < x; i++) {
         var row = chessBoard.appendChild(document.createElement("div"));
         for (var j = 0; j < x; j++) {
             var span = document.createElement('span');
             if (i & 1) { // odd
                 if (j & 1) { // white
-
+                    span.style.backgroundColor = "white";
                 } else { // black
-                    span.style.backgroundColor = "#dbeef4";
+                    span.style.backgroundColor = "#d0d8e8";
                 }
             } else {  // even
                 if (j & 1) { // black
-                    span.style.backgroundColor = "#dbeef4";
+                    span.style.backgroundColor = "#d0d8e8";
+                }
+                else {
+                    span.style.backgroundColor = "white";
                 }
             }
             row.appendChild(span);
