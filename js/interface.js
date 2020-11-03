@@ -11,7 +11,7 @@ inputDiv
     .attr("class", "form-control")
     .attr("id", "inputNumber")
     .attr("type", "number")
-    .attr("value", 3)
+    .attr("value", 4)
     .attr("step", "1")
     .attr("pattern", "\d+")
     .on("change", function () {
@@ -22,8 +22,8 @@ d3.select("#cnf-wrapper").style("height")
 d3.select("#editor-wrapper")
     .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70) + "px")
 
-d3.select("#chess-wrapper")
-    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70 - 400) + "px")
+d3.select("#output-wrapper")
+    .style("height", (document.getElementById("cnf-wrapper").offsetHeight - 70 - 255) + "px")
 
 function submit() {
     console.log("hi")
@@ -58,34 +58,50 @@ function isValid(val) {
     return !(isNaN(val) || parseInt(val) < 0);
 }
 
-function colorNormal(x) {
+function colorNormal(x, sat) {
     d3.select("#chessBoardNormal").selectAll("*").remove()
     d3.select("#chessBoardNormal")
-        .style("visibility", "visible")
+        .style("visibility", x !== 0 ? "visible" : "hidden")
     var chessBoard = document.getElementById("chessBoardNormal");
+    let locationArr = outputString.split("|v").slice(1).join("").split(" ").map(d => parseInt(d)).filter(d => d>0)
+
     for (var i = 0; i < x; i++) {
         var row = chessBoard.appendChild(document.createElement("div"));
         for (var j = 0; j < x; j++) {
             var span = document.createElement('span');
+            var img = document.createElement('img');
+            img.src = "images/Queen-icon.png"
+            img.style.height = "32px"
+            img.style.width = "32px"
+            img.style.position = "absolute"
+
             if (i & 1) { // odd
                 if (j & 1) { // white
                     span.style.backgroundColor = "white";
+                    drawQueen(i,j,span,img)
                 } else { // black
                     span.style.backgroundColor = "#d0d8e8";
+                    drawQueen(i,j,span,img)
                 }
             } else {  // even
                 if (j & 1) { // black
                     span.style.backgroundColor = "#d0d8e8";
+                    drawQueen(i,j,span,img)
                 }
                 else {
                     span.style.backgroundColor = "white";
+                    drawQueen(i,j,span,img)
                 }
             }
             row.appendChild(span);
         }
     }
+
+    function drawQueen(i,j,span,img) {
+        if (locationArr.includes(i*x+j+1)){
+            span.appendChild(img)
+        }
+    }
+
 }
 
-function draw() {
-    colorNormal(val)
-}

@@ -56,7 +56,11 @@
 				<div id="selectPanelDiv" class="form-group mx-sm-3 mb-2" style="display: inline-block">
 				</div>
 				<button id="runbutton" class="btn btn-success mb-2">Run</button>
-				<div id="result" class="btn">Loading</div>
+				<div id="result" class="btn">
+						<div class="loadingio-spinner-spinner-e4l0gr1tas4"><div class="ldio-6rtrst5re4l">
+							<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+						</div></div>
+					</div>
 			</div>
 		</div>
 
@@ -74,7 +78,7 @@
 			<div>
 				<h4><code>Output</code></h4>
 			</div>
-			<div id="output-wrapper" style="height:400px; overflow: auto">
+			<div id="output-wrapper" style="overflow: auto">
 				<div class="row">
 					<div id="output" class="col-md-12 bg-light" readOnly="true" spellcheck="false">
 					</div>
@@ -82,7 +86,7 @@
 				</div>
 			</div>
 
-			<div id="chess-wrapper" class="col-md-12 bg-light" style="overflow: auto">
+			<div id="chess-wrapper" class="col-md-12 bg-light" style="height:255px; overflow: auto">
 				<div>
 					<div id="chessBoardNormal" class="chessBoard mt-3" style="visibility: hidden">
 
@@ -209,7 +213,7 @@ Analytics"></a></div>
 
 <script src="minisat/cryptominisat5_simple.js" type="text/javascript" charset="utf-8"></script>
 <script>
-
+	let outputString = ""
 	function scroll() {
 		document.getElementById("output").scrollTop = document.getElementById("output").scrollHeight;
 	}
@@ -227,9 +231,8 @@ Analytics"></a></div>
 	}
 	Module['print'] = function (text) {
 		var bottom = at_bottom();
-		console.log(text)
 		$('#output').append("<code>" + text + "</code><br/>")
-		// outputString = outputString + (text + "\n")
+		outputString = outputString + ("|" + text)
 		if (bottom) {
 			scroll();
 		}
@@ -262,9 +265,11 @@ Analytics"></a></div>
 		$('#result').text(nconfl + " confl");
 		if (result == 0) {
 			$('#result').text('SATISFIABLE');
+			colorNormal(parseInt(document.getElementById("inputNumber").value), true)
 			running = false;
 		} else if (result == 1) {
 			$('#result').text('UNSATISFIABLE');
+			colorNormal(parseInt(document.getElementById("inputNumber").value), false)
 			running = false;
 		} else if (result == 2) {
 			window.setTimeout(function () {
@@ -281,6 +286,7 @@ Analytics"></a></div>
 
 	$().ready(function () {
 		$('#runbutton').click(function () {
+			outputString = ""
 			if (running) {
 				must_stop = true;
 				$('#output').append("<code>Stopping...</code><br/>")
@@ -302,7 +308,6 @@ Analytics"></a></div>
 			$('#result').text('Running');
 
 			var source = SAT_expression(val);
-			colorNormal(val)
 			try {
 				var result = cms_query(source)
 				check_result(result);
