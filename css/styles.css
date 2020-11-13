@@ -45,11 +45,27 @@ h4 code {
     color: #991d92;
 }
 
-#scroll-note{
+.scroll-note{
     color: #909498;
     float: right;
     line-height: 1.8;
 }
+
+.icon {
+    display: inline-block;
+    height: 20px;
+    width: auto;
+    opacity: 0.7;
+}
+
+.btn-icon button{
+    padding: 0.1rem 0.5rem 0.3rem 0.5rem;
+}
+
+/*.icon:hover {*/
+/*    opacity: 0.5;*/
+/*    transition: 0.3s;*/
+/*}*/
 
 /* chess board */
 .chessBoard {
