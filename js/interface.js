@@ -33,11 +33,16 @@ function formatCNF(result) {
             // .replace("1 position", )
             .replace("1 2 ", "</span><span style='color: #130095'>1 2 ")
             .replace("p cnf 1 2","p cnf 1 2</span><span style='color: #130095'>")
-            .split("\n")
+            .split("\n").map(d => d.trim())
             .join("<br/>")
         + "</span></code>"
 }
 
+function formatCNFbr(result) {
+    return result
+            .split("\n").map(d => d.trim())
+            .join("\n")
+}
 
 function isValid(val) {
     return !(isNaN(val) || parseInt(val) < 0);

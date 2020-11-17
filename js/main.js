@@ -87,6 +87,7 @@ $().ready(function () {
             return
         }
         $("#editor").html(formatCNF(sat(val)))
+        $("#clipboard").html(formatCNFbr(sat(val)))
         running = true;
         $('#playbut').removeClass("fa-play");
         $('#playbut').addClass("fa-stop");

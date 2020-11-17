@@ -126,6 +126,6 @@ function sat(N){
         tempG=tempG+atm_one(A)
     })
 
-    output = output +  'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG
+    output = output +  'p cnf ' + (N*N) + ' ' + (tempG.split('\n').length - 1) + '\n' + tempG.trim()
     return output
 }
