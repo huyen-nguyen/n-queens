@@ -100,12 +100,9 @@
 					<button id="popoverCopy" class="btn btn-light" href="#" onclick="copyCNF()">
 						<img class="icon" src="images/copy-icon.png"></button>
 
-					<a id="download_link" download="my_exported_file.txt"
-					><button id="popoverExport" class="btn btn-light" href="" onclick="exportCNF()">
+					<a id="download_link">
+						<button id="popoverExport" class="btn btn-light" onclick="exportCNF()">
 						<img class="icon" src="images/export-icona.png"></button></a>
-
-<!--					<a id="download_link" download="my_exported_file.txt" href="" >Download as Text File</a>-->
-
 
 				</div>
 			</div>
@@ -159,7 +156,8 @@
 		var url = window.URL.createObjectURL(data);
 
 		document.getElementById('download_link').href = url;
-		document.getElementById('download_link').setAttribute("class", "democlass");
+		document.getElementById('download_link')
+			.setAttribute("download", document.getElementById("inputNumber").value + "-queens.cnf");
 	}
 	function copyCNF() {
 		var $temp = $("<textarea>");
