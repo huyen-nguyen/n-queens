@@ -127,3 +127,32 @@ function num_conflicts() {
     ret = num_conflicts_function();
     return ret;
 }
+
+$("#popoverCopy").popover({
+    trigger: "hover",
+    placement: "bottom",
+    content: "Copy"
+});
+
+$("#popoverExport").popover({
+    trigger: "hover",
+    placement: "bottom",
+    content: "Export"
+});
+
+function exportCNF() {
+    var text = $("#clipboard").html();
+    var data = new Blob([text], {type: 'text/plain'});
+    var url = window.URL.createObjectURL(data);
+
+    document.getElementById('download_link').href = url;
+    document.getElementById('download_link')
+        .setAttribute("download", document.getElementById("inputNumber").value + "-queens.cnf");
+}
+function copyCNF() {
+    var $temp = $("<textarea>");
+    $("body").append($temp);
+    $temp.val($("#clipboard").html()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}

@@ -133,39 +133,7 @@
 </div>
 
 <script src="minisat/crmns.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/solver.js"></script>
-<script src="js/interface.js"></script>
-<script src="js/main.js"></script>
+<script src="lib/main.js"></script>
 
-<script>
-	$("#popoverCopy").popover({
-		trigger: "hover",
-		placement: "bottom",
-		content: "Copy"
-	});
-
-	$("#popoverExport").popover({
-		trigger: "hover",
-		placement: "bottom",
-		content: "Export"
-	});
-
-	function exportCNF() {
-		var text = $("#clipboard").html();
-		var data = new Blob([text], {type: 'text/plain'});
-		var url = window.URL.createObjectURL(data);
-
-		document.getElementById('download_link').href = url;
-		document.getElementById('download_link')
-			.setAttribute("download", document.getElementById("inputNumber").value + "-queens.cnf");
-	}
-	function copyCNF() {
-		var $temp = $("<textarea>");
-		$("body").append($temp);
-		$temp.val($("#clipboard").html()).select();
-		document.execCommand("copy");
-		$temp.remove();
-	}
-</script>
 </body>
 </html>
