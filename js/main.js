@@ -86,15 +86,16 @@ $().ready(function () {
             $('#chessBoardNormal').html("")
             return
         }
-        $("#editor").html(formatCNF(sat(val)))
-        $("#clipboard").html(formatCNFbr(sat(val)))
+        let res = sat(val)
+        $("#editor").html(formatCNF(res))
+        $("#clipboard").html(formatCNFbr(res))
         running = true;
         $('#playbut').removeClass("fa-play");
         $('#playbut').addClass("fa-stop");
 
         $('#result').text('Running');
 
-        var source = sat(val);
+        var source = res;
         try {
             var result = cms_query(source)
             check_result(result);

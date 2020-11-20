@@ -101,7 +101,7 @@ function sat(N){
 
 // Atmost 1 queen per negative diagonal from top
     range(1,N).forEach(column => {
-        A=[]
+        let A=[]
         range(0,N-column).forEach(x => {
             A.push(varmap(x,column+x,N))
         })
@@ -119,7 +119,7 @@ function sat(N){
 
 // Atmost 1 queen per positive diagonal from top
     range(N-2,-1,-1).forEach(column => {
-        A=[]
+        let A=[]
         range(0,column+1).forEach(x => {
             A.push(varmap(x,column-x,N))
         })
